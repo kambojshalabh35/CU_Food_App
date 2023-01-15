@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load mathfilters %}
+{% block head %}
+<title>CUFoodApp - Home</title>
+{% endblock head %}
+{% block body %}
+
+<style>
+    /* width */
+    .customscroll::-webkit-scrollbar {
+        height: 10px;
+    }
+
+    /* Track */
+    .customscroll::-webkit-scrollbar-track {
+        background: #fff !important;
+    }
+
+    /* Handle */
+    .customscroll::-webkit-scrollbar-thumb {
+        background: #888888 !important;
+        border-radius: 10px;
+    }
+
+    /* Handle on hover */
+    .customscroll::-webkit-scrollbar-thumb:hover {
+        background: #555 !important;
+    }
+
+    .img-cropped {
+        object-fit: cover;
+        object-position: center center;
+        width: 250px;
+        height: 250px;
+    }
+    .col-flex-4 {
+        flex: 0 0 auto;
+        width: 250px;
+    }
+</style>
+
+<div>
+    <section id="hero" class="flex">
+        <div class="container">
+            <div class="md:flex justify-center">
+                <div class="w-full my-auto md:w-1/2">
+                    <h1>CU Food App</h1>
+                    <p>CU's own Food Court Automation System</p>
+                </div>
+                <div class="w-full md:w-1/2">
+                    <img src="{% static 'img/cu.png' %}" class="w-full" alt="hero">
+                </div>
+            </div>
+        </div>
+      </section>
+
+    <div id="topproducts" class="container">
+        {% if topproducts %}
+            <div class="bg-[#fff] my-8 mx-5 pt-7 pb-12">
+                <h2 class="pb-3 pl-7 text-2xl">Top Selling</h2>
+                <div class="mx-7 flex overflow-x-scroll customscroll">
+                    {% for pro in topproducts %}
+                    <div class="col-flex-4 mx-5 py-4">
+                        <a href="buy/{{pro.slug}}" class="w-full">
+                            <div class="w-full">
+                                <img src="{{pro.image.url}}" class="w-full img-cropped" alt="{{pro.slug}}">
+                                <p class="mt-3"><b>{{pro.title}}</b></p>
+                                <p class="mt-0 text-sm">Rs. {{pro.price}}/-</p>
+                            </div>
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <div id="featuredproducts" class="container">
+        {% if featuredproducts %}
+            <div class="bg-[#fff] my-8 mx-5 pt-7 pb-12">
+                <h2 class="pb-3 pl-7 text-2xl">Featured</h2>
+                <div class="mx-7 flex overflow-x-scroll customscroll">
+                    {% for pro in featuredproducts %}
+                    <div class="col-flex-4 mx-5 py-4">
+                        <a href="buy/{{pro.slug}}" class="w-full">
+                            <div class="w-full">
+                                <img src="{{pro.image.url}}" class="w-full img-cropped" alt="{{pro.slug}}">
+                                <p class="mt-3"><b>{{pro.title}}</b></p>
+                                <p class="mt-0 text-sm">Rs. {{pro.price}}/-</p>
+                            </div>
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <div id="yourfavourate" class="container">
+        {% if favproducts %}
+            <div class="bg-[#fff] my-8 mx-5 pt-7 pb-12">
+                <h2 class="pb-3 pl-7 text-2xl">You may like</h2>
+                <div class="mx-7 flex overflow-x-scroll customscroll">
+                    {% for pro in favproducts %}
+                    <div class="col-flex-4 mx-5 py-4">
+                        <a href="buy/{{pro.slug}}" class="w-full">
+                            <div class="w-full">
+                                <img src="{{pro.image.url}}" class="w-full img-cropped" alt="{{pro.slug}}">
+                                <p class="mt-3"><b>{{pro.title}}</b></p>
+                                <p class="mt-0 text-sm">Rs. {{pro.price}}/-</p>
+                            </div>
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+</div>
+
+{% endblock body %}

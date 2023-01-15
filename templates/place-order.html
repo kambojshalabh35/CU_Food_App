@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% block head %}
+<title>CUFoodApp - {{product.title}}</title>
+{% endblock head %}
+{% block body %}
+<div>
+    <div class="md:flex justify-center md:px-20">
+        <div class="w-full md:w-1/2 text-center">
+            <img src="{{product.image.url}}" class="w-full mx-auto" alt="">
+        </div>
+        <div class="w-full md:w-1/2 mt-5">
+            <p class="mb-5 text-center font-bold text-4xl">{{product.title}}</p>
+            <div class="w-4/5 md:w-4/5 text-white text-center mx-auto">
+                <input type="hidden" id="price" value="{{product.price}}">
+                <form class="" method="post">
+                    {% csrf_token %}
+                    <div class="space-y-5 py-8 rounded-sm bg-white">
+                        <div>
+                            <input type="number" max="5" min="1" name="quantity" id="quantity" class="w-4/5 px-3 py-2 rounded mt-1 text-black placeholder:text-black border-2 border-black" placeholder="Quantity (1-5)" required>
+                        </div>
+                        <div>
+                            <input type="tel" name="contactnumber" class="w-4/5 px-3 py-2 rounded mt-1 text-black placeholder:text-black border-2 border-black" placeholder="Contact Number" required>
+                        </div>
+                        <div>
+                            <select name="ordertype" id="ordertype" class="w-4/5 px-3 py-2 rounded mt-1 text-black placeholder:text-black border-2 border-black" aria-placeholder="Order Type">
+                                <option value="">Order Type</option>
+                                <option value="False">Dinning</option>
+                                <option value="True">Delivery</option>
+                            </select>
+                        </div>
+                        <div class="hidden" id="location">
+                            <div>
+                                <input type="text" name="landmark" class="w-4/5 px-3 py-2 rounded mt-1 text-black placeholder:text-black border-2 border-black" placeholder="Room Number / Landmark">
+                            </div>
+                            <div class="mt-5">
+                                <input type="text" name="block" class="w-4/5 px-3 py-2 rounded mt-1 text-black placeholder:text-black border-2 border-black" placeholder="Block / Hostel">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-5 text-black hidden" id="table">
+                        <table class="table-auto w-full">
+                            <thead>
+                              <tr>
+                                <th>Rate</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>{{product.price}}</td>
+                                <td id="quantityvalue"></td>
+                                <td id="pricevalue"></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                    </div>
+                    <div class="hidden mt-5" id="submit">
+                        <button type="submit" class="py-2 px-4 bg-red-500 hover:bg-red-600 rounded-sm">Order</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    setInterval(function order() {
+        let order_type = document.getElementById("ordertype").value
+        if(order_type==="True") {
+            document.getElementById("location").classList.remove("hidden")
+            document.getElementById("submit").classList.remove("hidden")
+        } else if(order_type==="False") {
+            if(document.getElementById("location").classList.contains("hidden")){
+                document.getElementById("submit").classList.remove("hidden")
+            } else {
+                document.getElementById("location").classList.add("hidden")
+                document.getElementById("submit").classList.remove("hidden")
+            }
+        } else if(order_type==""){
+            if(document.getElementById("location").classList.contains("hidden")){} else {
+                document.getElementById("location").classList.add("hidden")
+            }
+            if(document.getElementById("submit").classList.contains("hidden")){} else {
+                document.getElementById("submit").classList.add("hidden")
+            }
+        }
+
+        let quantity = document.getElementById("quantity").value
+        let price = document.getElementById("price").value
+        if(quantity !== "" && quantity !== 0) {
+            document.getElementById("table").classList.remove("hidden")
+            document.getElementById("quantityvalue").innerHTML = quantity;
+            document.getElementById("pricevalue").innerHTML =  "Rs. " + quantity*price;
+        } else {
+            if(document.getElementById("table").classList.contains("hidden")) {} else {
+                document.getElementById("table").classList.add("hidden")
+            }
+        }
+    }, 200);
+</script>
+
+{% endblock body %}

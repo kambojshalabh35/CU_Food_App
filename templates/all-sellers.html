@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+<title>CUFoodApp - Home</title>
+{% endblock head %}
+{% block body %}
+
+<div>
+    <div class="container mt-10">
+        <h2 class="text-3xl font-bold mx-10 mb-1">All Sellers</h2>
+        <p class="mx-10 mb-4">Here are all verified sellers</p>
+            
+        <div class="bg-white py-10 mx-6">
+            <div class="grid grid-cols-4 mx-5">
+                {% for seller in sellers %}
+                    <div class="mx-5 mb-8">
+                        <a href="../seller-product/{{seller.user_linked}}">
+                            <img src="{% static 'img/shops.jpg' %}" alt="{{seller.shop_name}}">
+                            <h4 class="hover:text-red-900 hover:underline">{{seller.shop_name}}</h4>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}
